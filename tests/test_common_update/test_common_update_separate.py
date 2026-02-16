@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Common update tests."""
+
 from pathlib import Path
 
 

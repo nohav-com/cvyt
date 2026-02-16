@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Cvyt logig(import module)."""
+
 import sys
 
 

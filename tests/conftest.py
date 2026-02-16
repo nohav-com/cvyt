@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 """Global conftest."""
+
 import json
 import shutil
 import zipfile

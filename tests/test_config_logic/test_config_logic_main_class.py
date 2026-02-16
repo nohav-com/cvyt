@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+"""Test covering config logic."""
+
 import json
-import pytest
 from pathlib import Path
 
 

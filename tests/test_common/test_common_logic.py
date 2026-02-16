@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Commond logic tests."""
+
 from pathlib import Path
 from cvyt.common import (
     convert_json_object_to_string,

@@ -1,7 +1,8 @@
-import pytest
+# -*- coding: utf-8 -*-
+"""Update logic tests."""
+
 import shutil
 from cvyt.update.update_logic import UpdateLogic
-from cvyt.config_logic import ConfigLogic
 from cvyt.default_app_config import DEFAULT_CONFIG
 from pathlib import Path
 

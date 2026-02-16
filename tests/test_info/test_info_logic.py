@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Info logic tests."""
+
 # Variable
 UNKNOWN = "UNKNOWN"
 

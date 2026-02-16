@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""Help logic tests."""
+
+
 def test_get_browser_flag(help_logic_instance_ok):
     """Get browser flag(default is True)."""
     browser_flag = help_logic_instance_ok.get_use_browser()
