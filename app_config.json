@@ -1,0 +1,123 @@
+{
+    "name": "cvyt",
+    "version": "0.0.1",
+    "title": "CVYT by nohav.com",
+    "author": "nohav.com",
+    "contact": "nohav.com@gmail.com",
+    "homepage": "www.nohav.com",
+    "description": "Apps helps to use library cv2 on more user friendly level.",
+    "max_resolution": {
+        "X": 3840,
+        "Y": 2160
+    },
+    "config": {
+        "tags": {
+            "advanced": "==>",
+            "level_up": ".."
+        }
+    },
+    "create": [
+        [
+            "modules",
+            "required"
+        ]
+    ],
+    "update": {
+        "modules": [
+            "modules",
+            "required"
+        ],
+        "parts": [
+            [
+                "update",
+                "modules"
+            ]
+        ]
+    },
+    "modules": {
+        "required": [
+            "__init__.py",
+            "module_config.json",
+            "(.*)widget.py",
+            "help.pdf"
+        ],
+        "required_other": [
+            "name",
+            "description",
+            "update",
+            "root",
+            "class_name"
+        ],
+        "config": "module_config.json",
+        "root": "modules"
+    },
+    "app": {
+        "root": ".",
+        "config": "app_config.json"
+    },
+    "help": {
+        "file": "HOWTO.pdf",
+        "browser": 0,
+        "tab": 1
+    },
+    "number_list": [
+        1,
+        1,
+        [],
+        {},
+        1,
+        {}
+    ],
+    "str2": [
+        {
+            "dict1_k": 12,
+            "1": 1
+        },
+        61
+    ],
+    "str3": {
+        "dict2_k": {
+            "dict3_k": {
+                "dict4_k": "dict4_value"
+            }
+        }
+    },
+    "str4": [
+        62
+    ],
+    "empty_dict": {},
+    "empty_list": [
+        []
+    ],
+    "2": [
+        "2",
+        {
+            "aa": "aa",
+            "kkk": [
+                "xxx1",
+                "eee2",
+                "fffff\t",
+                "uuu"
+            ]
+        },
+        [
+            "xxx1",
+            "eee2",
+            "uuu",
+            "hhh"
+        ],
+        {
+            "jj": "jj"
+        },
+        [
+            [
+                "lokloklok"
+            ]
+        ],
+        "xxx2"
+    ],
+    "number": {
+        "ak": "av"
+    },
+    "1": "13"
+}

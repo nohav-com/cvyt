@@ -1,0 +1,28 @@
+[project]
+name = "cvyt"
+version = "0.0.1"
+description = "Cv2 for everyone"
+authors = [{ name = "Zdenek Novotny", email = "nohav.com@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.11.0,<3.14"
+
+dependencies = [
+    "pyside6 (>=6.9.3,<7.0.0)",
+    "opencv-python (>=4.12.0.88,<5.0.0.0)",
+    "numpy (>=2.4.2,<3.0.0)",
+]
+
+[tool.poetry]
+packages = [{ include = "cvyt", from = "src" }]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.2,<10.0.0)",
+    "coverage (>=7.13.1,<8.0.0)",
+    "lint (>=1.2.1,<2.0.0)",
+    "isort (>=7.0.0,<8.0.0)",
+]

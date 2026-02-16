@@ -1,0 +1,12 @@
+2026-02-16 19:52:01,710 - cvyt.update.update_widget -ln: 156 - INFO - Update of modules started
+2026-02-16 19:52:01,713 - cvyt.update.update_widget -ln: 160 - INFO - Update of module 'split_to_frames' is finished.
+2026-02-16 19:52:01,715 - cvyt.update.update_widget -ln: 160 - INFO - Update of module 'filters' is finished.
+2026-02-16 19:52:03,505 - cvyt.update.update_widget -ln: 186 - INFO - Update finished
+2026-02-16 19:52:08,190 - cvyt.cvyt_logic -ln: 72 - INFO - Parent folder is 'modules/split_to_frames'.
+2026-02-16 19:52:08,191 - cvyt.cvyt_logic -ln: 115 - INFO - Cannot import module via '__init__' file(No module named 'split_to_frames').
+2026-02-16 19:52:08,928 - cvyt.cvyt_logic -ln: 72 - INFO - Parent folder is 'modules/filters'.
+2026-02-16 19:52:08,928 - cvyt.cvyt_logic -ln: 75 - INFO - Cleaning trash('__pycache__').
+2026-02-16 19:52:08,929 - cvyt.cvyt_logic -ln: 115 - INFO - Cannot import module via '__init__' file(No module named 'filters').
+2026-02-16 19:52:08,931 - cvyt.cvyt_logic -ln: 188 - ERROR - Can not import module 'filters' because: No module named 'cvyt.common_config_logic'.
+2026-02-16 19:52:38,185 - cvyt.config.config_widget -ln: 345 - ERROR - Attempt to remove item '1' failed. Check log file.
+2026-02-16 19:52:46,399 - cvyt.config.config_widget -ln: 345 - ERROR - Attempt to remove item '2' failed. Check log file.

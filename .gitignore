@@ -1,0 +1,7 @@
+src/cvyt/__pycache__/*
+src/cvyt/*/__pycache__/*
+tests/__pycache__/*
+tests/*/__pycache__/*
+temp_update
+HOWTO.odt
+modules/*
