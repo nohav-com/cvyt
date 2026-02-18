@@ -422,10 +422,7 @@ files = [
 [package.dependencies]
 astroid = ">=4.0.2,<=4.1.dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
-dill = [
-    {version = ">=0.3.7", markers = "python_version >= \"3.12\""},
-    {version = ">=0.3.6", markers = "python_version == \"3.11\""},
-]
+dill = {version = ">=0.3.7", markers = "python_version >= \"3.12\""}
 isort = ">=5,<5.13 || >5.13,<8"
 mccabe = ">=0.6,<0.8"
 platformdirs = ">=2.2"
@@ -555,5 +552,5 @@ files = [
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.11.0,<3.14"
-content-hash = "658e9d1b5a493515903424703d0e0e37c3844bc8e7c21ba0867f902978d652f6"
+python-versions = ">=3.12.0,<3.15"
+content-hash = "559e6a7f9be847632f7fb8d3e215958495745ddc8393b8f2fd1e6662279fc77f"
