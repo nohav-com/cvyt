@@ -267,11 +267,16 @@ class CreateMainWindow(QtWidgets.QMainWindow):
 
     @QtCore.Slot()
     def open_app_config_widget(self):
-        """Prepare and open config file(app's config file)."""
+        """Prepare and open config file(app's config file).
+
+        This method should be used only to open app config, not config file
+        from outside.
+        """
         # Config object exists.
         if self.app_config:
             # Reload content of config object to reflect new changes
-            self.app_config.reload_config()
+            # self.app_config.reload_config()
+            self.app_config.load_config()
             # Open it
             self.config_tab(self.app_config, name="Config - cvyt")
 
