@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Edit widget."""
+"""A config edit widget."""
 
 import logging
 
@@ -16,21 +16,22 @@ VALUE = "Value:"
 TYPE = "Type:"
 
 # Description messages
-DEFAULT_MSG = "Keep it mind what you are adding(when value needs to be filled)"
+DEFAULT_MSG = "Keep in mind what you are editing when a value needs to be entered."
 
 logger = logging.getLogger(__name__)
 
 
 class ConfigEditWindow(QtWidgets.QDialog):
-    """Create simple window for operation 'Edit' over config object.
+    """Create a simple window for the 'Edit' operation on s config object.
 
     Kwargs:
-    parent = parent widget to tie the window to
-    config = config object to work with(edit, validation, etc.)
-    edit = value pair with current key+value
-    edit_from = string saying what we are editing
-    keys_chain = chain of keys to navigate where to do the operatio
-    index_item = Index of the item to be edited(in case list)
+    parent      = parent widget to attach the window to
+    config      = config object to work with (editing, validation, etc.)
+    edit        = key-value pair currently being edited
+    edit_from   = string indicating what is being edited
+    keys_chain  = chain of keys to navigate to the target location for
+                  the operation
+    index_item  = index of the item to be edited (used for lists)
     """
     def __init__(self, /, **kwargs):
         self.parent = kwargs.get("parent", None)
@@ -39,58 +40,58 @@ class ConfigEditWindow(QtWidgets.QDialog):
         self.edit_from = kwargs.get("edit_from", None)
         self.keys_chain = kwargs.get("keys_chain", [])
         self.item_index = kwargs.get("item_index", None)
-        # Use parent widget to init dialog window
+        # Use the parent widget to initialize the dialog window
         super().__init__(self.parent)
         self.changes_page = QtWidgets.QWidget()
         self.changes_page_layout = QtWidgets.QVBoxLayout(self.changes_page)
-        # Variables
+        # Variables used to handle user input
         self.type_box = QtWidgets.QListWidget()
         self.name_box = QtWidgets.QTextEdit()
         self.value_box = QtWidgets.QTextEdit()
-        # Global layout for window
+        # Global layout of the window
         self.main_layout = QtWidgets.QVBoxLayout()
         self.setLayout(self.main_layout)
 
-        # Appereance
+        # Appearance
         self.setWindowTitle(WIDGET_TITLE)
         self.add_value_overview()
         self.add_cancel_ok_buttons()
 
-        # Fill the list with available types of value which can be used
+        # Fill the list with value types that can be used
         self.set_available_types_of_value()
-        # Set current type of value
+        # Set the current value type
         self.set_current_type_value()
-        # Fixed size of the window
+        # Set a fixed size for the window
         self.resize(700, 300)
-        # Lets roll
+        # Let's roll
         self.exec()
 
     def reset_messages_to_default(self):
-        """Reset all description messages to default value."""
+        """Reset all description messages/texts to their default values."""
         try:
             self.name_message.setText(DEFAULT_MSG)
             self.value_message.setText(DEFAULT_MSG)
             self.type_message.setText("")
         except Exception as e:
-            logger.error("Could not reset all default messages(%s).", e)
+            logger.error("Could not reset all default messages (%s).", e)
 
     def set_message_to(self, part_id: QtWidgets.QLabel, message: str):
-        """Set message to specific label.
+        """Set a message on a specific label.
 
         Args:
-        id = lable object
-        message = message to show
+        id = label object
+        message (str)= message to display
         """
         if part_id and message:
             try:
                 part_id.setText(message)
             except Exception as e:
                 logger.warning(
-                    "Could not set message '%s' to '%s' because '%s'",
+                    "Could not set message '%s' on '%s' because '%s'.",
                     message, part_id, e)
 
     def add_value_overview(self):
-        """Simple overview with name(key), value, type textboxes to fill."""
+        """Simple overview with text boxes for Name (key), Value, and Type."""
         # Appearance
         edit_to_widget = QtWidgets.QWidget()
         edit_to_layout = QtWidgets.QHBoxLayout(edit_to_widget)
@@ -104,13 +105,13 @@ class ConfigEditWindow(QtWidgets.QDialog):
         name_widget = QtWidgets.QWidget()
         name_layout = QtWidgets.QHBoxLayout(name_widget)
         name_label = QtWidgets.QLabel(NAME)
-        # Set name - current
+        # Set the name - current
         if self.edit:
             self.name_box.setText(self.edit[0])
         name_layout.addWidget(name_label)
         name_layout.addWidget(self.name_box)
         self.main_layout.addWidget(name_widget)
-        # Add name message
+        # Add a name message
         self.name_message = QtWidgets.QLabel(DEFAULT_MSG)
         self.name_message.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.main_layout.addWidget(self.name_message)
@@ -118,13 +119,13 @@ class ConfigEditWindow(QtWidgets.QDialog):
         value_widget = QtWidgets.QWidget()
         value_layout = QtWidgets.QHBoxLayout(value_widget)
         value_label = QtWidgets.QLabel(VALUE)
-        # Set value - current
+        # Set the value - current
         if self.edit:
             self.value_box.setText(self.edit[1])
         value_layout.addWidget(value_label)
         value_layout.addWidget(self.value_box)
         self.main_layout.addWidget(value_widget)
-        # Add value message
+        # Add a value message
         self.value_message = QtWidgets.QLabel(DEFAULT_MSG)
         self.value_message.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.main_layout.addWidget(self.value_message)
@@ -135,15 +136,15 @@ class ConfigEditWindow(QtWidgets.QDialog):
         type_layout.addWidget(type_label)
         type_layout.addWidget(self.type_box)
         self.main_layout.addWidget(type_widget)
-        # Add error message
+        # Add a error message
         self.type_message = QtWidgets.QLabel()
         self.type_message.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.main_layout.addWidget(self.type_message)
-        # Connect to method
+        # Connect to the methods
         self.type_box.itemClicked.connect(self.type_value_selection_changed)
 
     def type_value_selection_changed(self):
-        """Selection of type changed."""
+        """Selection type changed."""
         item = self.type_box.currentItem()
         if item:
             item_type = item.text()
@@ -152,7 +153,7 @@ class ConfigEditWindow(QtWidgets.QDialog):
                 self.type_message.setText(help_message)
 
     def set_current_type_value(self):
-        """Set current type of value."""
+        """Set the current value type."""
         if self.edit:
             items = self.type_box.findItems(
                 self.edit[2], QtCore.Qt.MatchFlag.MatchExactly
@@ -162,7 +163,7 @@ class ConfigEditWindow(QtWidgets.QDialog):
                 self.type_value_selection_changed()
 
     def set_available_types_of_value(self):
-        """Set list of available/alowed types of values."""
+        """Set a list of available/alowed value types."""
         for item in self.config.get_list_of_type_names():
             list_item = QtWidgets.QListWidgetItem(item)
             self.type_box.addItem(list_item)
@@ -182,14 +183,14 @@ class ConfigEditWindow(QtWidgets.QDialog):
         self.main_layout.addWidget(button_box)
 
     def accept_ok(self):
-        """Collect values(inputs), validate and apply them to config."""
+        """Collect input values, validate them, and apply to the config."""
         name = self.name_box.toPlainText()
         value = self.value_box.toPlainText()
         value_type = self.type_box.currentItem().text()
-        # Convert value to proper format(based on type of value)
+        # Convert value to the proper format(based on its type)
         converted_value = self.config.convert_value_to_type(value_type, value)
 
-        # Reset messages/descriptions
+        # Reset messages and descriptions
         self.reset_messages_to_default()
 
         # Validate

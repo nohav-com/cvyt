@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-The simple and easier way to set configuration foro logging.
-Easier for distribution - no extra files/configs
+Provides a simple, easy-to-use logging configuration.
+Ideal for distribution—requires no extra files or configuration.
 """
 
 import logging
@@ -15,7 +15,8 @@ def set_logging_settings(log_location_path: str = None):
     """Set logging settings.
 
     Args:
-    log_location_path = path to folder, where to store app_log file(optional)
+    log_location_path (str)= path to the folder, where the 'app_log file'
+    (optional) will be stored
     """
     handler = get_logging_handler(log_location_path)
     logging.basicConfig(
@@ -29,7 +30,8 @@ def get_logging_handler(log_location_path: str = None) ->\
     """Settings for logging.
 
     Args:
-    log_location_path = path to folder, where to store app_log file(optional)
+    log_location_path (str)= path to the folder, where the 'app_log file'
+    (optional) will be stored
     """
     handler = None
     # Formatter
@@ -43,7 +45,8 @@ def get_logging_handler(log_location_path: str = None) ->\
                                LOGGING_OUTPUT_FILE)
 
         if log_destination:
-            # Set "behaviour" of these log file(how many to history, max. size)
+            # Set the "behaviour" of the log files(number of history file
+            # max. file size)
             handler = logging.handlers.RotatingFileHandler(
                 filename=str(log_destination),
                 maxBytes=1000000,

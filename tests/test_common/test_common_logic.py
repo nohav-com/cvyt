@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Commond logic tests."""
+"""Common logic tests."""
 
 from pathlib import Path
 from cvyt.common import (
@@ -10,12 +10,12 @@ from cvyt.default_app_config import DEFAULT_CONFIG
 
 
 def test_get_json_content_valid(tmp_path):
-    """Try to convert valid json file"""
+    """Try to convert a valid JSON file."""
     # Prepare file
     file_path = Path(tmp_path).joinpath("dummy.json")
     with open(str(file_path), "w", encoding='utf-8') as file_in:
         file_in.write(convert_json_object_to_string(DEFAULT_CONFIG))
-    # Read the json
+    # Read the JSON
     config_again = None
     with open(str(file_path), "r", encoding='utf-8') as file_again:
         config_again = convert_string_to_json_object(file_again.read())
@@ -25,13 +25,13 @@ def test_get_json_content_valid(tmp_path):
 
 
 def test_get_json_content_not_valid(tmp_path):
-    """Try to convert not valid json file."""
+    """Try to convert an invalid JSON file."""
     # Prepare file
     file_path = Path(tmp_path).joinpath("dummy.json")
     with open(str(file_path), "w") as _:
         pass
 
-    # Read the json
+    # Read the JSON
     config_again = None
     with open(str(file_path), "r", encoding='utf-8') as file_again:
         config_again = convert_string_to_json_object(file_again.read())

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Logic for info window/widget."""
+"""Logic for the info window/widget."""
 
 import logging
 
@@ -12,24 +12,24 @@ logger = logging.getLogger(__name__)
 
 
 class InfoLogic():
-    """Basic logic supporting info window/widget"""
+    """Basic logic for the info window/widget"""
     def __init__(self, /, **kwargs):
         self.config = kwargs.get('config', None)
 
     def get_name(self) -> str:
-        """Get name of the app."""
+        """Get the name of the app."""
         return self.config.get_name() if self.config else UNKNOWN
 
     def get_version(self) -> str:
-        """Get version of the app."""
+        """Get the app version."""
         return self.config.get_version() if self.config else UNKNOWN
 
     def get_contact(self) -> str:
-        """Get contact."""
+        """Get the contact."""
         return self.config.get_contact() if self.config else UNKNOWN
 
     def get_homepage(self) -> str:
-        """Get homepage of the app."""
+        """Get the app homepage."""
         homepage = self.config.get_homepage() if self.config else None
         if homepage:
             return "<a href='%s'>%s</a>" % (homepage, homepage)
@@ -37,6 +37,6 @@ class InfoLogic():
             return UNKNOWN
 
     def get_description(self) -> str:
-        """Get a description of the app."""
+        """Get the app description."""
         return self.config.get_description() \
             if self.config else UNKNOWN

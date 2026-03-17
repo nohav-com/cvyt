@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Info windows/widget."""
+"""The info window/widget."""
 
 import logging
 import webbrowser
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreateInfoWindow(QtWidgets.QWidget):
-    """Create simple info window/widget with information."""
+    """Create a simple info window/widget with information."""
     def __init__(self, *args, **kwargs):
         super().__init__()
         self.logic = InfoLogic(*args, **kwargs)
@@ -53,11 +53,11 @@ class CreateInfoWindow(QtWidgets.QWidget):
         self.setLayout(self.main_layout)
 
     def add_version(self):
-        """Add version item to widget."""
+        """Add a version item to the widget."""
         self.version = QtWidgets.QLabel(self.logic.get_version())
 
     def home_page_open(self, link="Not working"):
-        """Set possibility to open link in default browser."""
+        """Set the option to open link in the default browser."""
         try:
             webbrowser.open(link, new=1)
         except Exception as e:
@@ -65,5 +65,5 @@ class CreateInfoWindow(QtWidgets.QWidget):
                 "Could not open link '%s' in browser(%s).", link, e)
 
     def add_title(self, title='Info'):
-        """Add title to window/tab"""
+        """Add a title to the window/tab"""
         self.setWindowTitle(title)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Available modules for main widget. Using AbstractListModel."""
+"""Available modules for the main widget. Using AbstractListModel."""
 
 import logging
 
@@ -13,11 +13,11 @@ logger = logging.getLogger(__name__)
 
 
 class ModelAvailableModules(QtCore.QAbstractListModel):
-    """Simple logic connected to main menu placed to left side offering
-    overview list of available modules to be possibly used.
+    """Simple logic connected to the main menu placed on the left side,
+    providing an overview list of available modules that can be used.
 
-    Using pyside6 AbstractListModel, just to use it and see its pros and
-    cones.
+    Uses PySide6 AbstractListModel to experiment with it and see its
+    pros and cons.
 
     Args:
     config = config object
@@ -31,10 +31,11 @@ class ModelAvailableModules(QtCore.QAbstractListModel):
         return self.common_update.get_count_of_available_modules()
 
     def data(self, index, role=QtCore.Qt.DisplayRole) -> str:
-        """Get data/name for specified row/line in the list.
+        """Get the data/name for the specified row/line in the list.
 
         Args:
         index = row from list to be processed
+        role = role flag(how to process output)
 
         Returns:
         name of the module
@@ -44,10 +45,10 @@ class ModelAvailableModules(QtCore.QAbstractListModel):
             return self.get_name_of_module(row)
 
     def get_name_of_module(self, position) -> str | None:
-        """Get name of the module.
+        """Get the name of the module.
 
         Args:
-        position = row from list
+        position = row index from the list
 
         Returns:
         name of the module(file name)
@@ -61,11 +62,11 @@ class ModelAvailableModules(QtCore.QAbstractListModel):
         return module_name
 
     def get_value_for_key_in_module(self, module: str, key: str):
-        """Get value for key from info object of specific module.
+        """Get the value for a key from the info object of a specific module.
 
         Args:
-        module = module name
-        key = key to search for
+        module (str)= module name
+        key (str)= key to search for
 
         Returns:
         The value for the key
@@ -75,8 +76,8 @@ class ModelAvailableModules(QtCore.QAbstractListModel):
     def create_modules_list(self):
         """Create a list of all available modules.
 
-        It means find the folders, scan them, validated them,
-        collect info and store the info to expected format.
+        This means finding the folders, scanning them, validating them,
+        collecting info and storing the info in the expected format.
         """
         modules_root = self.config.get_value_for_key(
             self.common_update.get_modules_root_keys_chain())
@@ -85,13 +86,13 @@ class ModelAvailableModules(QtCore.QAbstractListModel):
         )
 
     def get_init_file(self, module_info: dict) -> str | None:
-        """Get init file(path to it) for specified module.
+        """Get the init file(path to it) for specified module.
 
         Args:
-        module_name = name of the module
+        module_name (dict)= name of the module
 
         Returns:
-        path to init file
+        path to the init file
         """
         init_file = None
         if "__init__.py" in module_info:
@@ -99,9 +100,9 @@ class ModelAvailableModules(QtCore.QAbstractListModel):
         return init_file
 
     def get_module_info(self, module_name: str):
-        """Get info abpout modeule.
+        """Get info about the module.
 
         Args:
-        module_name = name of the module
+        module_name (str)= name of the module
         """
         return self.common_update.get_detailed_info_about_module(module_name)

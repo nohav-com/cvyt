@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Common logic for everything."""
+"""A common logic for everything."""
 
 import json
 import logging
@@ -8,10 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 def convert_json_object_to_string(json_object: dict) -> str | None:
-    """Convert json object to string.
+    """Convert the json object to a string.
 
     Args:
-    json_object = json object to be converted
+    json_object (dict)= the json object to be converted
 
     Returns:
     String or None
@@ -21,16 +21,16 @@ def convert_json_object_to_string(json_object: dict) -> str | None:
         try:
             string = json.dumps(json_object, indent=4)
         except Exception as e:
-            logger.warning("Could not convert json to string(%s).", e)
+            logger.warning("Could not convert JSON to string(%s).", e)
         finally:
             return string
 
 
-def convert_string_to_json_object(string: str):
-    """Convert string to json object.
+def convert_string_to_json_object(string: str) -> dict | None:
+    """Convert a string to a json object.
 
     Args:
-    string = content of the file to convert
+    string (str)= the content of the file to convert
 
     Returns:
     json object(dict) or None
@@ -41,6 +41,6 @@ def convert_string_to_json_object(string: str):
             json_object = json.loads(string)
         except Exception as e:
             logger.warning(
-                "Could not convert file conten to json object(%s).", e)
+                "Could not convert file content to JSON object(%s).", e)
         finally:
             return json_object

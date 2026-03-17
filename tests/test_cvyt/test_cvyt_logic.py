@@ -9,16 +9,16 @@ def test_import_dummy_module_correct(
         create_dummy_module,
         get_dummy_module_name):
     """Try to import dummy_module."""
-    # Get dummy module name
+    # Get the dummy module name
     dummy_module_name = get_dummy_module_name
-    # Get temp folder for modules, available modules model
+    # Get the temp folder for modules, available modules model
     temp_module, available_modules = create_dummy_module
     assert temp_module.exists()
-    # Create list of available modules
+    # Create the list of available modules
     available_modules.create_modules_list()
     dummy_module_info = available_modules.get_module_info(dummy_module_name)
     assert dummy_module_info
-    # Import module
+    # Import the module
     module = cvyt_logic_instance_ok.import_module(
         dummy_module_name, dummy_module_info, "Dummy notning", "dummy_nothing"
     )
@@ -26,11 +26,11 @@ def test_import_dummy_module_correct(
 
 
 def test_cvyt_logic_remove_not_existing_key(cvyt_logic_instance_ok):
-    """Tryt to remove not existing imported module."""
+    """Try to remove a not-existing imported module."""
     # Get all imported modules
     imported = sys.modules
 
-    # Remove not existing module
+    # Remove the not-existing module
     cvyt_logic_instance_ok.clean_sys_modules("abracadabra")
 
     # After clear

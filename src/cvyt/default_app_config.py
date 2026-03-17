@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Default content of app_config file. Done this way to avoid nessecity to
-ship this app with extra file(default config and config it self).
-It means if necesseraly app will create new config from scratch.
+Provides the default content for the `app_config` file.
+This approach avoids requiring an additional file to be shipped with the app.
+If no config exists, the app will generate a new one from scratch.
 """
 
 
@@ -13,7 +13,7 @@ DEFAULT_CONFIG = {
     "author": "nohav.com",
     "contact": "nohav.com@gmail.com",
     "homepage": "www.nohav.com",
-    "description": "Use cv2 in friendly way.",
+    "description": "Apps helps to use library cv2 in more user-friendly way.",
     "max_resolution": {
         "X": 3840,
         "Y": 2160
@@ -40,6 +40,7 @@ DEFAULT_CONFIG = {
         "required": [
             "__init__.py",
             "module_config.json",
+            "(.*)widget.py",
             "help.pdf"
         ],
         "required_other": [

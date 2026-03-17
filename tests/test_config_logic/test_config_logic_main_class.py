@@ -6,46 +6,46 @@ from pathlib import Path
 
 
 def test_get_config_object(config_logic_instance_default_config_file):
-    """Try to get config object."""
+    """Try to get the config object."""
     config = config_logic_instance_default_config_file.get_config_object()
     assert config is not None
     assert isinstance(config, dict)
 
 
 def test_load_config(tmp_path, config_logic_instance_default_config_file):
-    """It expecting new config file(file_path) and it will read the content
-    and store the content to config object.
+    """It expects a new config file(file_path) and reads its
+    content, storing it in the config object.
     """
-    # Prepare new simple config file
+    # Prepare a new simple config file
     new_config = Path(tmp_path).joinpath("new_config.json")
-    # Fill new config
+    # Fill the new config
     new_config_content = {"key": "value"}
     with open(new_config, "w", encoding='utf-8') as file_out:
         file_out.write(json.dumps(new_config_content, indent=4))
-    # Call the reload
+    # Call reload
     config_logic_instance_default_config_file.load_config(
         config_file_name=new_config)
-    # Get config content
+    # Get the config content
     config = config_logic_instance_default_config_file.get_config_object()
     assert config == new_config_content
 
 
 def test_save_config(tmp_path, config_logic_instance_default_config_file):
     """Save config to file."""
-    # Prepare new simple config file
+    # Prepare a new simple config file
     new_config = Path(tmp_path).joinpath("new_config.json")
-    # Just create it --> can be used for storing
+    # Just create it --> can be used for storage
     with open(new_config, "w", encoding='utf-8') as _:
         pass
     config_logic_instance_default_config_file.save_config(
         new_config)
     assert new_config.exists()
-    # Get new config content
+    # Get the new config content
     new_content = None
     with open(new_config, "r", encoding='utf-8') as file_out:
         new_content = json.loads(file_out.read())
     assert new_content is not None
-    # Get current config object
+    # Get the current config object
     current_config = config_logic_instance_default_config_file.\
         get_config_object()
     assert current_config is not None
@@ -53,9 +53,9 @@ def test_save_config(tmp_path, config_logic_instance_default_config_file):
 
 
 def test_apply_to_config_add_valid(config_logic_instance_default_config_file):
-    """Try to add something to config file.
+    """Try to add something to the config file.
 
-    Tries to add something to config object, valid item
+    Attemps to add a valid item to the config object.
     """
     # Add item to "help" --> add key="test", value=0
     keys_chain = ["help"]
@@ -65,7 +65,7 @@ def test_apply_to_config_add_valid(config_logic_instance_default_config_file):
         add=add_pair
     )
     assert applied
-    # Get config object
+    # Get the config object
     config = config_logic_instance_default_config_file.get_config_object()
     part = config_logic_instance_default_config_file.get_value_for_key(
         keys_chain)
@@ -76,19 +76,19 @@ def test_apply_to_config_add_valid(config_logic_instance_default_config_file):
 
 
 def test_apply_to_config_edit_valid(config_logic_instance_default_config_file):
-    """Try to edit something in config file.
+    """Try to edit something in the config file.
 
-    Tries to edit something in config object, valid item.
+    Attemps to edit a valid item in the config object.
     """
     keys_chain = ["max_resolution", "X"]
-    # Prepare new key+value pair
+    # Prepare a new key-value pair
     edit_pair = ("X", 1234)
     applied = config_logic_instance_default_config_file.apply_to_config(
         keys_chain,
         edit=edit_pair
     )
     assert applied
-    # Get config object
+    # Get the config object
     config = config_logic_instance_default_config_file.get_config_object()
     part = config_logic_instance_default_config_file.get_value_for_key(
         keys_chain)
@@ -101,7 +101,7 @@ def test_apply_to_config_remove_valid(
         config_logic_instance_default_config_file):
     """Try to remove something from config file.
 
-    Tries to remove something from config object, valid item.
+    Tries to remove a valid item from teh config object.
     """
     # What to remove
     keys_chain = ["max_resolution"]
@@ -110,7 +110,7 @@ def test_apply_to_config_remove_valid(
         remove=True
     )
     assert applied
-    # Get config object
+    # Get the config object
     config = config_logic_instance_default_config_file.get_config_object()
     part = config_logic_instance_default_config_file.get_value_for_key(
         keys_chain)
@@ -120,11 +120,11 @@ def test_apply_to_config_remove_valid(
 
 def test_apply_to_config_remove_not_valid(
         config_logic_instance_default_config_file):
-    """Try to remove something from config file.
+    """Try to remove something from the config file.
 
-    Tries to remove something from config object, not valid item.
+    Tries to remove a valid item from the config object.
     """
-    # Keys chain
+    # Key chain
     keys_chain = ["abc", "def"]
     # Before remove
     config_before = config_logic_instance_default_config_file.\
@@ -141,32 +141,33 @@ def test_apply_to_config_remove_not_valid(
 
 
 def test_set_config_object_to_none(config_logic_instance_default_config_file):
-    """Try to set config object to None.
+    """Try to set the config object to None.
 
-    It should keep the original config object.
-    New object should be the same type as original(dict)
+    It should preserve the original config object.
+    The new object should be of the same type as the original(dict).
     """
     current = config_logic_instance_default_config_file.get_config_object()
-    # Set new object
+    # Set the new object
     config_logic_instance_default_config_file.set_config_object(None)
     new = config_logic_instance_default_config_file.get_config_object()
     assert current == new
 
 
 def test_set_config_object_to_new(config_logic_instance_default_config_file):
-    """Try to set config object to None.
+    """Try to set the config object to None.
 
-    It should keep replace the config object.
+    It should replace the config object.
     """
-    # Set new object
+    # Set the new object
     new_config = {"is": "new"}
     config_logic_instance_default_config_file.set_config_object(new_config)
     new = config_logic_instance_default_config_file.get_config_object()
     assert new_config == new
 
 
-def test_check_key_in_level_existing(config_logic_instance_default_config_file):
-    """Check if key exists in current level(in dict).
+def test_check_key_in_level_existing(
+        config_logic_instance_default_config_file):
+    """Check if a key exists in the current level(in dict).
 
     Returns True or False.
     """
@@ -179,7 +180,7 @@ def test_check_key_in_level_existing(config_logic_instance_default_config_file):
 
 def test_check_key_in_level_not_existing(
         config_logic_instance_default_config_file):
-    """Check if key exists in current level(in dict).
+    """Check if a key exists in the current level(in dict).
 
     Returns True or False.
     """
@@ -191,9 +192,9 @@ def test_check_key_in_level_not_existing(
 
 
 def test_get_value_for_key_existing(config_logic_instance_default_config_file):
-    """Get value for key.
+    """Get the value for a key.
 
-    Testing existing key.
+    Test an existing key.
     """
     keys = ["max_resolution", "X"]
     value = config_logic_instance_default_config_file.get_value_for_key(keys)
@@ -202,9 +203,9 @@ def test_get_value_for_key_existing(config_logic_instance_default_config_file):
 
 def test_get_value_for_key_not_existing(
         config_logic_instance_default_config_file):
-    """Get value for key.
+    """Get the value for a key.
 
-    Testing not_existing key. It shouled return original value.
+    Test a not_existing key. It should return the original value.
     """
     keys = ["max_resolution", "ukulele"]
     value = config_logic_instance_default_config_file.get_value_for_key(keys)
@@ -213,9 +214,9 @@ def test_get_value_for_key_not_existing(
 
 def test_get_value_for_key_recursive_existing(
         config_logic_instance_default_config_file):
-    """Get value for key.
+    """Get the value for a key.
 
-    Testing existing key.
+    Test an existing key.
     """
     keys = ["max_resolution", "X"]
     value = config_logic_instance_default_config_file.get_value_for_key(keys)
@@ -224,9 +225,9 @@ def test_get_value_for_key_recursive_existing(
 
 def test_get_value_for_key_recursive_not_existing(
         config_logic_instance_default_config_file):
-    """Get value for key.
+    """Get the value for a key.
 
-    Testing not_existing key. It shouled return original value.
+    Testing a not_existing key. It should return the original value.
     """
     keys = ["max_resolution", "ukulele"]
     value = config_logic_instance_default_config_file.get_value_for_key(keys)
@@ -235,10 +236,10 @@ def test_get_value_for_key_recursive_not_existing(
 
 def test_can_i_edit_object_type_valid(
         config_logic_instance_default_config_file):
-    """Check if type can be edited.
+    """Check if the type can be edited.
 
-    Expecting name as string e.g. 'dict', 'abc'.
-    Returns True, False.
+    Expects name as a string e.g. 'dict', 'abc'.
+    Returns True or False.
     """
     type_name = "number"
     edit = config_logic_instance_default_config_file.\
@@ -248,9 +249,9 @@ def test_can_i_edit_object_type_valid(
 
 def test_can_i_edit_object_type_not_valid(
         config_logic_instance_default_config_file):
-    """Check if type can be edited.
+    """Check if the type can be edited.
 
-    Expecting name as string e.g. 'dict', 'abc'.
+    Expects name as a string e.g. 'dict', 'abc'.
     Returns True, False.
     """
     type_name = "dict"
@@ -261,20 +262,20 @@ def test_can_i_edit_object_type_not_valid(
 
 def test_can_i_apply_changes_possible_str(
         config_logic_instance_default_config_file):
-    """Check if changes can be applied to current item.
+    """Check if changes can be applied to the current item.
 
-    E.g.
+    For example:
     name='name'
     value='value'
     value_type='string'
     apply_to = 'string'
-    ==> I can
+    ==> Allowed
 
     name='name'
     value='1'
     value_type='number'
     apply_to = 'string'
-    ==> I cannot
+    ==> Not allowed
     """
     name = "name"
     value = "value"
@@ -291,20 +292,20 @@ def test_can_i_apply_changes_possible_str(
 
 def test_can_i_apply_changes_possible_dict(
         config_logic_instance_default_config_file):
-    """Check if changes can be applied to current item.
+    """Check if changes can be applied to the current item.
 
-    E.g.
+    For example:
     name='name'
     value='value'
     value_type='string'
     apply_to = 'string'
-    ==> I can
+    ==> Allowed
 
     name='name'
     value='1'
     value_type='number'
     apply_to = 'string'
-    ==> I cannot
+    ==> Not allowed
     """
     name = "name"
     value = "value"
@@ -321,20 +322,20 @@ def test_can_i_apply_changes_possible_dict(
 
 def test_can_i_apply_changes_not_possible_number(
         config_logic_instance_default_config_file):
-    """Check if changes can be applied to current item.
+    """Check if changes can be applied to the current item.
 
-    E.g.
+    For example.
     name='name'
     value='value'
     value_type='string'
     apply_to = 'string'
-    ==> I can
+    ==> Allowed
 
     name='name'
     value='1'
     value_type='number'
     apply_to = 'string'
-    ==> I cannot
+    ==> Not allowed
     """
     name = ""
     value = "1"
@@ -351,7 +352,7 @@ def test_can_i_apply_changes_not_possible_number(
 
 def test_get_list_of_keys_root_level(
         config_logic_instance_default_config_file):
-    """Get list of keys from root level."""
+    """Get a list of keys from the root level."""
     keys_chain = []
     values_out, valid_level = config_logic_instance_default_config_file.\
         get_list_of_keys(keys_chain)
@@ -361,7 +362,7 @@ def test_get_list_of_keys_root_level(
 
 def test_get_list_of_keys_not_existing(
         config_logic_instance_default_config_file):
-    """Get list of keys from root level."""
+    """Get a list of keys from the root level."""
     keys_chain = ["abc"]
     values_out, valid_level = config_logic_instance_default_config_file.\
         get_list_of_keys(keys_chain)
@@ -371,7 +372,7 @@ def test_get_list_of_keys_not_existing(
 
 
 def test_get_name_for_type_known(config_logic_instance_default_config_file):
-    """Get name for type(python type converted) used by UI."""
+    """Get the name for a type(python type converted) used by the UI."""
     # Supported
     type_name = "str"
     expected_name = "string"
@@ -381,7 +382,7 @@ def test_get_name_for_type_known(config_logic_instance_default_config_file):
 
 
 def test_get_name_for_type_unknown(config_logic_instance_default_config_file):
-    """Get name for type(python type converted) used by UI."""
+    """Get the name for a type(python type converted) used by the UI."""
     # Unsupported
     type_name = True
     expected_name = "string"
@@ -391,7 +392,7 @@ def test_get_name_for_type_unknown(config_logic_instance_default_config_file):
 
 
 def test_get_list_of_type_names(config_logic_instance_default_config_file):
-    """Get list of supported types. List of strings -> used by UI."""
+    """Get a list of supported types (strings) used by the UI."""
     supported = config_logic_instance_default_config_file.\
         get_list_of_type_names()
     assert supported is not None
@@ -399,49 +400,49 @@ def test_get_list_of_type_names(config_logic_instance_default_config_file):
 
 
 def test_get_resolution(config_logic_instance_default_config_file):
-    """Get resolution from default config file."""
+    """Get the resolution from the default config file."""
     resolution = config_logic_instance_default_config_file.get_resolution()
     assert resolution is not None
     assert isinstance(resolution, tuple)
 
 
 def test_get_title(config_logic_instance_default_config_file):
-    """Get title from config file."""
+    """Get the title from the config file."""
     title = config_logic_instance_default_config_file.get_title()
     assert title is not None
     assert isinstance(title, str)
 
 
 def test_get_name(config_logic_instance_default_config_file):
-    """Get title from config file."""
+    """Get the name from the config file."""
     name = config_logic_instance_default_config_file.get_name()
     assert name is not None
     assert isinstance(name, str)
 
 
 def test_get_version(config_logic_instance_default_config_file):
-    """Get version from config file."""
+    """Get the version from the config file."""
     version = config_logic_instance_default_config_file.get_version()
     assert version is not None
     assert isinstance(version, str)
 
 
 def test_get_contact(config_logic_instance_default_config_file):
-    """Get contact from config file."""
+    """Get the contact from the config file."""
     contact = config_logic_instance_default_config_file.get_contact()
     assert contact is not None
     assert isinstance(contact, str)
 
 
 def test_get_homepage(config_logic_instance_default_config_file):
-    """Get homepage from config file."""
+    """Get the homepage from the config file."""
     homepage = config_logic_instance_default_config_file.get_homepage()
     assert homepage is not None
     assert isinstance(homepage, str)
 
 
 def test_get_description(config_logic_instance_default_config_file):
-    """Get description from config file."""
+    """Get the description from the config file."""
     desc = config_logic_instance_default_config_file.get_description()
     assert desc is not None
     assert isinstance(desc, str)
@@ -449,7 +450,7 @@ def test_get_description(config_logic_instance_default_config_file):
 
 def test_get_value_type_help_supported(
         config_logic_instance_default_config_file):
-    """Get help message for for specific type.
+    """Get the help message for a specific type.
 
     Supported type.
     """
@@ -462,7 +463,7 @@ def test_get_value_type_help_supported(
 
 def test_get_value_type_help_unsupported(
         config_logic_instance_default_config_file):
-    """Get help message for for specific type.
+    """Get the help message for a specific type.
 
     Unsupported type.
     """
@@ -473,11 +474,11 @@ def test_get_value_type_help_unsupported(
 
 
 def test_convert_value_to_type_dict(config_logic_instance_default_config_file):
-    """Convert type value/name to real value(based on given value).
+    """Convert a type value/name to its actual value(based on the given value).
 
-    Only supported types. Otherwise it returns original value.
+    Only supported types are allowed. Otherwise, original value is returned.
 
-    E.g.
+    For example.
     value = "==>dict"
     value_type = dict
 
@@ -494,11 +495,11 @@ def test_convert_value_to_type_dict(config_logic_instance_default_config_file):
 
 def test_convert_value_to_type_number(
         config_logic_instance_default_config_file):
-    """Convert type value/name to real value(based on given value).
+    """Convert a type value/name to its actual value(based on the given value).
 
-    Only supported types. Otherwise it returns original value.
+    Only supported types are allowed. Otherwise, original value is returned.
 
-    E.g.
+    For example.
     value = "==>dict"
     value_type = dict
 
@@ -515,11 +516,11 @@ def test_convert_value_to_type_number(
 
 def test_convert_value_to_type_unknown_type(
         config_logic_instance_default_config_file):
-    """Convert type value/name to real value(based on given value).
+    """Convert a type value/name to its actual value(based on the given value).
 
-    Only supported types. Otherwise it returns original value.
+    Only supported types are allowed. Otherwise, original value is returned.
 
-    E.g.
+    For example.
     value = "==>dict"
     value_type = dict
 
@@ -534,7 +535,7 @@ def test_convert_value_to_type_unknown_type(
 
 
 def test_get_config_path(config_logic_instance_default_config_file):
-    """Test to get path to config file."""
+    """Test to geting the path to the config file."""
     config_path = config_logic_instance_default_config_file.get_config_path()
     assert config_path is not None
     assert Path(config_path).exists()
@@ -542,10 +543,11 @@ def test_get_config_path(config_logic_instance_default_config_file):
 
 def test_get_specified_type_simple_advanced(
         config_logic_instance_default_config_file):
-    """Test if specified value is advanced type or not.
+    """Test if a given value is an advanced type or not.
 
-    In case is advanced it returns shortcut otherwise original value.
-    Its using method 'get_type_of_value_shortcut'.
+    If it is an advanced type, it returns the shortcut, otherwise its
+    returns the original value.
+    Uses the method 'get_type_of_value_shortcut'.
     """
     # Simple
     simple_value = "abc"
@@ -564,11 +566,11 @@ def test_get_specified_type_simple_advanced(
 
 def test_get_type_of_value_shortcut(
         config_logic_instance_default_config_file):
-    """Get shortcut for specific type of value.
+    """Get the shortcut for a specific type of value.
 
-    Takes value and compares it to list of supported(advanced) types
-    which needs to be converted to shortcut format used by UI.
-    If not advanced, returns None.
+    Takes a value and compares it to the list of supported (advanced) types,
+    converting it to the shortcut format used by the UI.
+    If the value is not advanced, returns None.
     """
     # Advanced types
     advanced_types_list = (list, dict)
@@ -587,10 +589,10 @@ def test_get_type_of_value_shortcut(
 
 def test_create_config_deep_path_valied(
         config_logic_instance_default_config_file):
-    """Create 'deep' path for UI. Expecting list of string.
+    """Create a 'deep' path for the UI. Expects a list of string.
 
-    Call of this method is coming from config widget where we are working
-    with string only(showing in UI).
+    This method is called from the config widget, where we work only with
+    strings (displayed in the UI).
     """
     parts = ["a", "..0", "b", "..1"]
     created_path = "a/..0/b/..1"
@@ -601,7 +603,7 @@ def test_create_config_deep_path_valied(
 
 
 def test_go_level_up_valid(config_logic_instance_default_config_file):
-    """Should we add key to chain of keys or not.
+    """Determine whether to add a key to the chain of keys.
 
     Valid 'level up' values are '.' '..'
     """
@@ -614,7 +616,7 @@ def test_go_level_up_valid(config_logic_instance_default_config_file):
 
 
 def test_go_level_up_not_valid(config_logic_instance_default_config_file):
-    """Should we add key to chain of keys or not.
+    """Determine whether to add a key to the chain of keys.
 
     Valid "level up" values are '.' '..'
     """
@@ -627,9 +629,9 @@ def test_go_level_up_not_valid(config_logic_instance_default_config_file):
 
 
 def test_let_through_valid_level_up(config_logic_instance_default_config_file):
-    """Test if current key and value are ok to continue.
+    """Test if the current key and value are valid to continue.
 
-    For go "up" or "down".
+    For navigating "up" or "down".
     """
     # Level up
     key = ".."
@@ -642,9 +644,9 @@ def test_let_through_valid_level_up(config_logic_instance_default_config_file):
 
 def test_let_through_valid_level_down(
         config_logic_instance_default_config_file):
-    """Test if current key and value are ok to continue.
+    """Test if the current key and value are valid to continue.
 
-    For go "up" or "down".
+    For navigating "up" or "down".
     """
     # Level up
     key = "."
@@ -657,9 +659,9 @@ def test_let_through_valid_level_down(
 
 def test_get_config_struct_tags_from_config(
         config_logic_instance_default_config_file):
-    """Get struct tags form config file.
+    """Get struct tags from the config file.
 
-    Aiming for "level up", "advanced" tags
+    Targets the "level up", "advanced" tags
     """
     config_logic_instance_default_config_file.\
         set_config_struct_tags_from_config()
@@ -670,9 +672,9 @@ def test_get_config_struct_tags_from_config(
 
 
 def test_is_advanced_type_valid(config_logic_instance_default_config_file):
-    """Test if name of type(UI) is advanced type or not.
+    """Test if a type name (UI) is an advanced type or not.
 
-    Advanced type are listed at top of file 'config_logic.py'.
+    Advanced types are listed at the top of the file 'config_logic.py'.
     """
     valid = "==>dict"
     is_valid = config_logic_instance_default_config_file.\
@@ -681,9 +683,9 @@ def test_is_advanced_type_valid(config_logic_instance_default_config_file):
 
 
 def test_is_advanced_type_not_valid(config_logic_instance_default_config_file):
-    """Test if name of type(UI) is advanced type or not.
+    """Test if a type name (UI) is an advanced type or not.
 
-    Advanced type are listed at top of file 'config_logic.py'.
+    Advanced types are listed at the top of the file 'config_logic.py'.
     """
     not_valid = "abc"
     is_valid = config_logic_instance_default_config_file.\
@@ -692,9 +694,9 @@ def test_is_advanced_type_not_valid(config_logic_instance_default_config_file):
 
 
 def test_get_index_if_is_valid(config_logic_instance_default_config_file):
-    """Test if string is index or not.
+    """Test if a string is an index or not.
 
-    Test valid index and return the index.
+    Validates the index and returns it if valid.
     """
     value = "..1"
     valid_index = 1
@@ -703,9 +705,9 @@ def test_get_index_if_is_valid(config_logic_instance_default_config_file):
 
 
 def test_get_index_if_is_not_valid(config_logic_instance_default_config_file):
-    """Test if string is index or not.
+    """Test if a string is an index or not.
 
-    Test not valid index and return the index.
+    Validates the index and returns it if valid.
     """
     value = "abc"
     not_valid_index = None
@@ -715,9 +717,9 @@ def test_get_index_if_is_not_valid(config_logic_instance_default_config_file):
 
 def test_get_index_if_is_partly_valid(
         config_logic_instance_default_config_file):
-    """Test if string is index or not.
+    """Test if a string is an index or not.
 
-    Test not valid index. Valid index should look like '..1'(dot-dot-int).
+    Tests an invalid index. A valid index should look like '..1' (dot-dot-int).
     """
     value = "...abc"
     not_valid_index = None

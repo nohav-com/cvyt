@@ -16,13 +16,10 @@ logger = logging.getLogger(__name__)
 
 
 class CreateUpdateWindow(QtWidgets.QWidget):
-    """Creating window/widget for update."""
+    """Creating a window/widget for update."""
     def __init__(self, /, **kwargs):
         super().__init__()
         self.logic = UpdateLogic(**kwargs)
-
-        # # Create/check temp folders for update purposes
-        # self.logic.create_temp_folders()
 
         # Main layout
         self.main_layout = QtWidgets.QVBoxLayout(self)
@@ -42,45 +39,44 @@ class CreateUpdateWindow(QtWidgets.QWidget):
         self.add_logs()
 
     def add_title(self, title='Update - cvyt'):
-        # Add title to window/widget
+        # Add a title to the window/widget
         self.setWindowTitle(title)
 
     def add_select_archive(self):
-        """Select archive."""
+        """Select the archive."""
         select_archive_layout = QtWidgets.QHBoxLayout()
         select_archive_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         # Select the archive
         self.select_textbox = QtWidgets.QTextEdit()
         self.select_textbox.setReadOnly(True)
         self.select_textbox.setMaximumHeight(30)
-        # From folder
+        # From the folder
         select_btn = QtWidgets.QPushButton("Folder")
         # Appearance
         select_btn.setMaximumWidth(60)
 
-        # select_archive_layout.addWidget(select_label)
         select_archive_layout.addWidget(self.select_textbox)
         select_archive_layout.addWidget(select_btn)
-        # Select archove group
+        # Select the archive group
         select_archive_group = QtWidgets.QGroupBox("Select archive:")
         select_archive_group.setCheckable(False)
         select_archive_group.setLayout(select_archive_layout)
 
         # Connect
         select_btn.clicked.connect(self.select_update_archive)
-        # Add to main layout
+        # Add to the main layout
         self.main_layout.addWidget(select_archive_group)
 
     def add_show_archive_content(self):
-        """Show archive content"""
-        # Show content of selected archive
+        """Show the archive content."""
+        # Show the contents of the selected archive
         self.show_content_archive = QtWidgets.QWidget()
         show_archive_layout = QtWidgets.QHBoxLayout(
             self.show_content_archive)
-        # Use everything
+        # Select all items
         self.select_all = QtWidgets.QCheckBox("Select all")
         self.select_all.setChecked(True)
-        # Show content of archive
+        # Show the contents of the archive
         show_archive_layout.addWidget(self.select_all)
         show_btn = QtWidgets.QPushButton("Show")
         # Appearance
@@ -94,8 +90,8 @@ class CreateUpdateWindow(QtWidgets.QWidget):
         self.main_layout.addWidget(self.show_content_archive)
 
     def add_select_modules_for_update(self):
-        """Select modules for update."""
-        # Select modules to update
+        """Select the modules to update."""
+        # Select the modules to update
         select_modules = QtWidgets.QWidget()
         select_modules_layout = QtWidgets.QHBoxLayout(select_modules)
         # Label - description
@@ -103,7 +99,7 @@ class CreateUpdateWindow(QtWidgets.QWidget):
         select_description_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.select_modules_description = QtWidgets.QTextEdit()
         self.select_modules_description.setReadOnly(True)
-        # Show list of available modules updates
+        # Show a list of the available modules
         select_available_label = QtWidgets.QLabel("Available:")
         select_available_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.select_modules_list = QtWidgets.QListWidget()
@@ -121,7 +117,7 @@ class CreateUpdateWindow(QtWidgets.QWidget):
         self.main_layout.addWidget(select_modules)
 
     def add_start_update(self):
-        """Start update."""
+        """Start the update."""
         start_udpate = QtWidgets.QWidget()
         start_update_layout = QtWidgets.QHBoxLayout(start_udpate)
         # Appearance
@@ -136,13 +132,13 @@ class CreateUpdateWindow(QtWidgets.QWidget):
 
         self.main_layout.addWidget(start_udpate)
 
-        # Connect to logic
+        # Connect
         update_btn.clicked.connect(self.initiate_update)
 
     def add_logs(self):
-        """Add logs part."""
+        """Add the logs section."""
         logging_layout = QtWidgets.QVBoxLayout()
-        # Test group box
+        # Logs
         log_group_box = QtWidgets.QGroupBox("Logs")
         log_group_box.setCheckable(False)
         log_group_box.setLayout(logging_layout)
@@ -152,47 +148,47 @@ class CreateUpdateWindow(QtWidgets.QWidget):
         logging_layout.addWidget(self.logging_box)
 
     def initiate_update(self):
-        """Initiate update."""
-        logger.info("Update of modules started")
+        """Initiate the update."""
+        logger.info("Module update has started.")
         for status, message in self.logic.initiate_update():
             if status and message:
-                # Update ok
+                # Update - ok
                 logger.info(
-                    "Update of module '%s' is finished.", message
+                    "Update of module '%s' has finished.", message
                 )
-                # Show message to user
+                # Show the message to the user
                 self.add_log_message(
-                    "Update of module '%s' is finished." % message)
+                    "Update of module '%s' has finished." % message)
             elif not status and message:
                 # Fail
-                logger.info("Update failed. %s", message)
-                # Show message to user
+                logger.info("Update of module failed: %s", message)
+                # Show the message to the user
                 self.add_log_message(
-                    "Update failed. %s" % message)
+                    "Update of module failed: %s" % message)
             else:
                 # Global problem
                 logger.warning(
-                    "Global problem with update occured. Check log file.")
-                # Show message to user
+                    "A global problem with the update occured(log file).")
+                # Show the message to the user
                 self.add_log_message(
-                    "Global problem with update occured. Check log file.")
+                    "A global problem with the update occured(log file).")
 
-        # Update finished
+        # Update has finished
         message = QtWidgets.QMessageBox(self)
         message.about(
             self,
             "Update",
-            "Update finished.")
-        logger.info("Update finished")
+            "Update has finished.")
+        logger.info("Update has finished")
 
-    # Show content of archive
+    # Show the content of the archive
     def show_content_of_archive(self):
-        """Show content of archive in simple way.
+        """Show the content of the archive in simple way.
 
-        e.g. checkbox + name of module
+        For example, display a checkbox next to each module name
         """
         self.select_modules_list.clear()
-        # Counter of svsilsblr moudules for update
+        # Counter of the visible modules for the update
         modules_for_update = 0
 
         for name, _ in self.logic.get_available_modules():
@@ -202,17 +198,17 @@ class CreateUpdateWindow(QtWidgets.QWidget):
             item.setFlags(QtCore.Qt.ItemFlag.ItemIsUserCheckable |
                           QtCore.Qt.ItemFlag.ItemIsEnabled)
             self.select_modules_list.addItem(item)
-            
-        # In case anot valid, available module for update
+
+        # No valid modules found
         if modules_for_update == 0:
             message = QtWidgets.QMessageBox(self)
             message.about(
                 self,
                 "Error - show modules",
-                "No valid module found. Check the archive content.")
+                "No valid modules found. Check the archive contents.")
 
     def select_all_status_changed(self):
-        """Status of select all checkbox changed."""
+        """Status of 'Select all' checkbox changed."""
         status = self.select_all.checkState()
         new_status = False if status == QtCore.Qt.CheckState.Unchecked\
             else True
@@ -231,26 +227,26 @@ class CreateUpdateWindow(QtWidgets.QWidget):
     def selected_module_update_item_changed(self, item):
         """Selected module item changed(checked/unchecked).
 
-        Emitted signal over item change - checked/unchecked
+        Signal emitted when an item is checked or unchecked
         """
-        # get item
+        # Get the item
         item_name = item.text()
         item_status = item.checkState()
         new_status = False
-        # Ok have it
+        # Ok
         if item_name:
             if item_status == QtCore.Qt.Checked:
                 new_status = True
             self.logic.set_module_update_status(item_name, new_status)
 
     def selection_of_module_to_update_changed(self):
-        """Selection of modules to be updated changed."""
+        """The selection of modules to be updated changed."""
         item = self.select_modules_list.currentItem()
         if item:
             self.show_description_for_module(item.text())
 
     def show_description_for_module(self, name):
-        """Set description text for specified module."""
+        """Set the description text for the specified module."""
         description = "Unknown"
         if name:
             description = self.logic.get_description_for_module(name)
@@ -258,19 +254,19 @@ class CreateUpdateWindow(QtWidgets.QWidget):
         self.select_modules_description.setText(description)
 
     def select_update_archive(self):
-        """Select file/atrchove to be used for update."""
-        # Clean up before start again
+        """Select the file/archive to be used for update."""
+        # Clean up before starting again
         self.clear_filled_form()
         dialog = QtWidgets.QFileDialog(self)
         dialog.setFileMode(QtWidgets.QFileDialog.FileMode.ExistingFile)
         archive_path, _ = dialog.getOpenFileName()
 
-        # Process given file
+        # Process the given file
         if archive_path:
             if Path(archive_path).exists():
                 self.select_textbox.clear()
                 self.select_textbox.insertPlainText(archive_path)
-                # Process arcchive by default
+                # Process the archive by default
                 self.logic.copy_archive_to_temp_folder(archive_path)
                 self.logic.process_archive(archive_path)
             else:
@@ -289,7 +285,7 @@ class CreateUpdateWindow(QtWidgets.QWidget):
         """Add log message + timestamp.
 
         Args:
-        message = just simple logg message(be processed ass str)
+        message = s simple log message(be processed as string)
         """
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         full_message = "%s - %s" % (

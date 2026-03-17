@@ -1,19 +1,19 @@
 # Cvyt
-Simple app, Ui based which can be used to to process video/image input. I basic it has **opencv-python** support. The whole app works as desktop app using python to create UI and running backend. Extra logic is imported dynamically by **importlib**. Each extra logic is handled as **module**. Each **module** has defined structure.
+A simple, UI-based app that can process video/image input. It is primarily built with **opencv-python** support. The entire app functions as a desktop application using Python to create the UI and run the backend. Additional logic is dynamically imported using **importlib**, and each extra logic **module** is treated as a module. Each module follows a defined structure.
 
 # How to start
 Its up to you.
 
 # Dependencies
-As been mentined its using **python** + **pyside6** for UI/backend and it has **opencv-python** to support video/image processing.
+As mentioned, the app uses **Python** with **PySide6** for the UI and backend, and **opencv-python** to support video/image processing.
 
 # Format, distribution
-For now its available only in raw python source code form.
+For now, it is available only as raw Python source code.
 
 # Support
-Its been developed and tested on Linux platform(ubuntu 24).
+It has been developed and tested on the Linux platform (Ubuntu 24).
 
 # Extendetion
-App is using **modules**, folder for each contains **widget**(pyside6) and **logic**. Of course we are expecting **module_config.json** with detailed info about module(description, etc.)
-The **widget** is handled as **main** file and it should contains class. 
-For more info look to **HOWTO.pdf** for detailed info.
+The app uses **modules**, with each module contained in a separate folder that includes a **widget** (PySide6) and associated **logic**. Each module is expected to have a **module_config.json** file, which provides detailed information about the module (such as description, etc.).
+The **widget** is treated as the **main** file and should define a class.
+For more information, refer to the **HOWTO.pdf** for detailed instructions.

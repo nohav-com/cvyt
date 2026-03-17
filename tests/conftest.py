@@ -36,10 +36,10 @@ MODULE_CONFIG_FILE_NAME = "module_config.json"
 MODULE_CONFIG_CONTENT = {
     "name": "dummy_module",
     "version": "0.0.1",
-    "description": "This is dummy module description"
+    "description": "This is a dummy module description"
 }
 MODULE_VERSION = "0.0.1"
-MODULE_DESCRIPTION = "This is dummy module description"
+MODULE_DESCRIPTION = "This is a dummy module description"
 
 ARCHIVE_DUMMY_NAME = "dummy_module_archive.zip"
 ARCHIVE_DUMMY_OUTPUT = "dummy_archive_output"
@@ -49,7 +49,7 @@ ARCHIVE_DUMMY_OUTPUT = "dummy_archive_output"
 def config_logic_instance_default_config_file():
     """Default config logic instance.
 
-    Using current app_config.json file.
+    Using the current app_config.json file.
     """
     logic = ConfigLogic()
     yield logic
@@ -58,9 +58,9 @@ def config_logic_instance_default_config_file():
 
 @pytest.fixture(scope='function')
 def help_logic_instance_ok(config_logic_instance_default_config_file):
-    """Help logic for help widget.
+    """Help logic for the help widget.
 
-    Using default app_config.json
+    Using the default app_config.json file.
     """
     help_logic = HelpLogic(
         config=config_logic_instance_default_config_file,
@@ -71,9 +71,9 @@ def help_logic_instance_ok(config_logic_instance_default_config_file):
 
 @pytest.fixture(scope='function')
 def info_logic_instance_ok(config_logic_instance_default_config_file):
-    """Info logic for info widget.
+    """Info logic for the info widget.
 
-    Using default app_config.json
+    Using the default app_config.json file.
     """
     info_logic = InfoLogic(
         config=config_logic_instance_default_config_file
@@ -84,9 +84,9 @@ def info_logic_instance_ok(config_logic_instance_default_config_file):
 
 @pytest.fixture(scope='function')
 def info_logic_instance_not_ok():
-    """Info logic for info widget.
+    """Info logic for the info widget.
 
-    Not passing instance of config object.
+    Not passing an instance of the config object.
     """
     info_logic = InfoLogic()
     yield info_logic
@@ -103,7 +103,7 @@ def cvyt_logic_instance_ok():
 
 @pytest.fixture(scope='function')
 def common_update_instance_ok(config_logic_instance_default_config_file):
-    """Create common update instance."""
+    """Create a common update instance."""
     common = CommonUpdate(config=config_logic_instance_default_config_file)
     yield common
     del common
@@ -118,61 +118,61 @@ def create_update_logic(config_logic_instance_default_config_file):
 
 @pytest.fixture(scope='function')
 def get_required_chain_of_keys():
-    """Get chain of keys to get list of required files."""
+    """Get the chain of keys to retrive the list of required files."""
     yield REQUIRED_CHAIN_OF_KEYS
 
 
 @pytest.fixture(scope='function')
 def get_dummy_module_name():
-    """Returns dummy module name."""
+    """Returns the dummy module name."""
     yield DUMMY_MODULE_NAME
 
 
 @pytest.fixture(scope='function')
 def get_dummy_module_version():
-    """Return dummy module version."""
+    """Return the dummy module version."""
     yield MODULE_VERSION
 
 
 @pytest.fixture(scope='function')
 def get_dummy_module_description():
-    """Returns dummy module description."""
+    """Returns the dummy module description."""
     yield MODULE_DESCRIPTION
 
 
 @pytest.fixture(scope='function')
 def create_dummy_module(tmp_path, config_logic_instance_default_config_file):
-    """Create dummy module for testing purpose."""
+    """Create the dummy module for testing purpose."""
     # New temp modules folder
     temp_modules = Path(tmp_path).joinpath("modules")
     temp_modules.mkdir()
-    # Alter root folder for modules
+    # Alter the root folder for modules
     new_config_content = DEFAULT_CONFIG
-    # Fill it with temp path
+    # Fill it with the temp path
     new_config_content["modules"]["root"] = str(temp_modules)
     config_logic_instance_default_config_file.set_config_object(
         new_config_content)
-    # Create available_modules instance
+    # Create an available_modules instance
     available_modules = ModelAvailableModules(
         config=config_logic_instance_default_config_file
     )
-    # Create folder
+    # Create a folder
     folder_path = Path(temp_modules).joinpath(DUMMY_MODULE_NAME)
     Path(folder_path).mkdir()
-    # Get list of required file from config
+    # Get a list of required files from the config
     required = config_logic_instance_default_config_file.get_value_for_key(
         REQUIRED_CHAIN_OF_KEYS)
-    # Create files
+    # Create the files
     if required:
         for item in required:
             item_path = Path(folder_path).joinpath(item)
             with open(str(item_path), "w") as _:
                 pass
-    # Create main class + content
+    # Create the main class + content
     main_class = Path(folder_path).joinpath(MAIN_CLASS_FILE_NAME)
     with open(main_class, "w", encoding="utf-8") as file_out:
         file_out.write(MAIN_CLASS_CONTENT)
-    # Fill module_config file
+    # Fill the module_config file
     module_config = Path(folder_path).joinpath(MODULE_CONFIG_FILE_NAME)
     with open(str(module_config), "w", encoding='utf-8') as config_in:
         config_in.write(json.dumps(MODULE_CONFIG_CONTENT, indent=4))
@@ -189,12 +189,12 @@ def create_modules_archive(
         config_logic_instance_default_config_file,
         get_required_chain_of_keys,
         create_update_logic):
-    """Create modules archive."""
+    """Create the modules archive."""
     temp_folder, _ = create_dummy_module
     assert temp_folder.exists()
-    # Create modules archvie
+    # Create the modules archvie
     archive_path = Path(temp_folder).joinpath(ARCHIVE_DUMMY_NAME)
-    # Get list of required file
+    # Get a list of required files
     required = config_logic_instance_default_config_file.get_value_for_key(
         get_required_chain_of_keys)
     assert required is not None
@@ -205,7 +205,7 @@ def create_modules_archive(
                 if file_path.exists():
                     zip_in.write(str(file_path))
     assert archive_path.exists()
-    # Return path to archive
+    # Return the path to the archive
     yield archive_path
     # Clean
     if archive_path.exists():

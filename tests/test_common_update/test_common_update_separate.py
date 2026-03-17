@@ -29,7 +29,7 @@ def test_get_count_available_modules_valid(
 
 
 def test_get_count_available_modules_not_valid(common_update_instance_ok):
-    """Get count of available modules over no modules"""
+    """Get count of available modules when no modules are present."""
     module_counter = common_update_instance_ok.get_count_of_available_modules()
     assert module_counter == 0
 
@@ -39,7 +39,7 @@ def test_get_value_for_key_existing_module(
     common_update_instance_ok,
     get_dummy_module_name
 ):
-    """Set value for key for existing module."""
+    """Set value for a key in a existing module."""
     key = "description"
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
@@ -53,7 +53,7 @@ def test_get_value_for_key_not_existing_module(
     common_update_instance_ok,
     get_dummy_module_name
 ):
-    """Set value for key for not existing module."""
+    """Set value for key in a not-existing module."""
     key = "description"
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
@@ -67,7 +67,7 @@ def test_set_value_for_key_existing_key_existing_module(
         common_update_instance_ok,
         get_dummy_module_name
 ):
-    """Alter value for existing key, for existing module"""
+    """Alter value for an existing key, in an existing module."""
     key = "description"
     altered_value = "altered value"
     path, _ = create_dummy_module
@@ -84,7 +84,7 @@ def test_set_value_for_key_existing_key_existing_module(
 
 
 def test_get_modules_root_path(common_update_instance_ok):
-    """Get path to root folder of modules."""
+    """Get path to the root folder of modules."""
     root = common_update_instance_ok.get_modules_root_path()
     assert root
 
@@ -94,7 +94,7 @@ def test_get_module_existing(
         common_update_instance_ok,
         get_dummy_module_name
 ):
-    """Get moodule info about existing one."""
+    """Get module info for an existing one."""
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
     module = common_update_instance_ok.get_module(get_dummy_module_name)
@@ -105,7 +105,7 @@ def test_get_module_not_existing(
         common_update_instance_ok,
         get_dummy_module_name
 ):
-    """Get moodule info about not existing one."""
+    """Get module info for not-existing module."""
     module = common_update_instance_ok.get_module(get_dummy_module_name)
     assert not module
 
@@ -114,7 +114,7 @@ def test_get_required_files(
         common_update_instance_ok,
         get_required_chain_of_keys
 ):
-    """Get list of required files/folder for module."""
+    """Get list of required files/folder for a module."""
     required = common_update_instance_ok.get_required_files(
         get_required_chain_of_keys)
     assert required
@@ -124,7 +124,7 @@ def test_create_update_list_existing(
         create_dummy_module,
         common_update_instance_ok
 ):
-    """Create update list of modules over existing folder of modules."""
+    """Create update list of modules from an existing modules folder."""
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
     module_counter = 0
@@ -135,7 +135,7 @@ def test_create_update_list_existing(
 
 
 def test_create_update_list_not_existing(common_update_instance_ok):
-    """Create update list of modules over not existing folder"""
+    """Create update list of modules from a not-existing folder."""
     common_update_instance_ok.create_update_list("abracadabra")
     module_counter = 0
     for name, module in common_update_instance_ok.get_available_modules():
@@ -145,7 +145,7 @@ def test_create_update_list_not_existing(common_update_instance_ok):
 
 
 def test_create_update_list_empty(common_update_instance_ok):
-    """Create update list of modules over empty folder."""
+    """Create update list of modules from an empty folder."""
     common_update_instance_ok.create_update_list(str(Path(__file__).parent))
     module_counter = 0
     for name, module in common_update_instance_ok.get_available_modules():
@@ -158,7 +158,7 @@ def test_get_only_folders_from_root_folder_existing(
         create_dummy_module,
         common_update_instance_ok
 ):
-    """Get root folders from existing folder."""
+    """Get root folders from an existing folder."""
     path, _ = create_dummy_module
     folders = common_update_instance_ok.get_only_folders_from_root_folder(
         str(path))
@@ -168,7 +168,7 @@ def test_get_only_folders_from_root_folder_existing(
 def test_get_only_folders_from_root_folder_not_existing(
         common_update_instance_ok
 ):
-    """Get root folders from not existing folder."""
+    """Get root folders from a not-existing folder."""
     folders = common_update_instance_ok.get_only_folders_from_root_folder(
         "abracadabra")
     assert not folders
@@ -178,7 +178,7 @@ def test_get_only_folders_from_root_folder_empty(
         common_update_instance_ok,
         tmp_path
 ):
-    """Get root folders from empty folder."""
+    """Get root folders from an empty folder."""
     folders = common_update_instance_ok.get_only_folders_from_root_folder(
         tmp_path)
     assert not folders
@@ -189,7 +189,7 @@ def test_get_detailed_info_about_module_existing(
         common_update_instance_ok,
         get_dummy_module_name
 ):
-    """Get detailed info about existing module."""
+    """Get detailed info about an existing module."""
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
     detailed = common_update_instance_ok.get_detailed_info_about_module(
@@ -202,7 +202,7 @@ def test_get_detailed_info_about_module_not_existing(
         create_dummy_module,
         common_update_instance_ok
 ):
-    """Get detailed info about not existing module."""
+    """Get detailed info about a not-existing module."""
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
     detailed = common_update_instance_ok.get_detailed_info_about_module(
@@ -215,7 +215,7 @@ def test_check_valid_content_of_module_not_existing(
         common_update_instance_ok,
         get_required_chain_of_keys
 ):
-    """Check valid content of module(folder)."""
+    """Check valid content of a module(folder)."""
     valid = common_update_instance_ok.check_valid_content(
         Path(__file__),
         get_required_chain_of_keys)
@@ -227,29 +227,29 @@ def test_add_rest_of_required_info_about_module_existing(
         common_update_instance_ok,
         get_dummy_module_name
 ):
-    """Add rest of required info about existing module."""
+    """Add the rest of the required info for an existing module."""
     altered_key = "description"
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
-    # Remove rest of required info(1 item)
+    # Remove the rest of the required info(1 item)
     common_update_instance_ok.set_value_for_key(
         get_dummy_module_name,
         altered_key,
         ""
     )
-    # Check if its altered
+    # Check if it's altered
     for name, module in common_update_instance_ok.get_available_modules():
         assert name
         assert module
-        # Check altered key
+        # Check if the key is altered
         assert not module.get(altered_key)
     # Add the info again
     common_update_instance_ok.add_rest_of_required_info(get_dummy_module_name)
-    # Check if its altered "back"
+    # Check if it's altered "back"
     for name, module in common_update_instance_ok.get_available_modules():
         assert name
         assert module
-        # Check altered key
+        # Check if the key is altered
         assert module.get(altered_key)
 
 
@@ -257,48 +257,47 @@ def test_add_rest_of_required_info_about_module_not_existing(
         create_dummy_module,
         common_update_instance_ok
 ):
-    """Add rest of required info about not existing module."""
+    """Add the rest of the required info for a not-existing module."""
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
-    # Get name of existing modules
+    # Get the names of existing modules
     existing = [name for name, _ in
                 common_update_instance_ok.get_available_modules()]
-    # add info - not existing module
+    # Add the info - not existing module
     common_update_instance_ok.add_rest_of_required_info("bracadabra")
     after_existing = [name for name, _ in
                       common_update_instance_ok.get_available_modules()]
     assert existing == after_existing
 
 
-# - process_basic_info
 def test_process_basic_info_about_module_existing(
         create_dummy_module,
         common_update_instance_ok,
         get_dummy_module_name
 ):
-    """Add basic info about existing module."""
+    """Add basic info about an existing module."""
     altered_key = "description"
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
-    # Remove rest of required info(1 item)
+    # Remove the rest of the required info(1 item)
     common_update_instance_ok.set_value_for_key(
         get_dummy_module_name,
         altered_key,
         ""
     )
-    # Check if its altered
+    # Check if it's altered
     for name, module in common_update_instance_ok.get_available_modules():
         assert name
         assert module
-        # Check altered key
+        # Check if the key is altered
         assert not module.get(altered_key)
     # Add the info again
     common_update_instance_ok.process_basic_info(get_dummy_module_name)
-    # Check if its altered "back"
+    # Check if it's altered "back"
     for name, module in common_update_instance_ok.get_available_modules():
         assert name
         assert module
-        # Check altered key
+        # Check if the key is altered
         assert module.get(altered_key)
 
 
@@ -306,13 +305,13 @@ def test_process_basic_info_about_module_not_existing(
         create_dummy_module,
         common_update_instance_ok
 ):
-    """Add basic info about not existing module."""
+    """Add basic info for a not-existing module."""
     path, _ = create_dummy_module
     common_update_instance_ok.create_update_list(path)
-    # Get name of existing modules
+    # Get the names of existing modules
     existing = [name for name, _ in
                 common_update_instance_ok.get_available_modules()]
-    # add info - not existing module
+    # Add info - not existing module
     common_update_instance_ok.process_basic_info("bracadabra")
     after_existing = [name for name, _ in
                       common_update_instance_ok.get_available_modules()]
@@ -320,14 +319,14 @@ def test_process_basic_info_about_module_not_existing(
 
 
 def test_get_module_root_keys_chain(common_update_instance_ok):
-    """Get chain of keys for modules root folder name."""
+    """Get the chain of keys for the modules root folder name."""
     root = common_update_instance_ok.get_modules_root_keys_chain()
     assert root is not None
     assert isinstance(root, list)
 
 
 def test_get_modules_config_file_name_keys_chain(common_update_instance_ok):
-    """Get chain of keys for module config file path."""
+    """Get the chain of keys for the module config file path."""
     config_file = common_update_instance_ok.\
         get_modules_config_file_name_keys_chain()
     assert config_file is not None
@@ -335,14 +334,14 @@ def test_get_modules_config_file_name_keys_chain(common_update_instance_ok):
 
 
 def test_get_temp_folder_name(common_update_instance_ok):
-    """Get name for temp folder."""
+    """Get the name for the temp folder."""
     temp_folder = common_update_instance_ok.get_temp_folder_name()
     assert temp_folder is not None
     assert isinstance(temp_folder, str)
 
 
 def test_get_required_module_content_keys_chain(common_update_instance_ok):
-    """Get chain of keys for required module content."""
+    """Get the chain of keys for the required module content."""
     required = common_update_instance_ok.\
         get_required_module_content_keys_chain()
     assert required is not None

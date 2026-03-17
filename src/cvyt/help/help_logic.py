@@ -1,4 +1,4 @@
-"""Logic for help window/widget."""
+"""Logic for the help window/widget."""
 from pathlib import Path
 import logging
 
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class HelpLogic():
-    """Basic logic for help widget."""
+    """Basic logic for the help widget."""
     def __init__(self, **kwargs):
         self.config = kwargs.get("config", None)
         self.help_path = None
@@ -21,7 +21,7 @@ class HelpLogic():
         self.browser = True
 
     def get_info_from_config(self):
-        """Return name of the help file."""
+        """Return the name of the help file."""
         if self.config:
             help_info = self.config.get_value_for_key(HELP_INFO)
             if help_info and self.cwd:
@@ -31,9 +31,9 @@ class HelpLogic():
                 self.browser = help_info.get("browser", None)
 
     def get_use_browser(self) -> bool:
-        """Get flag if we are using web browser."""
+        """Get the flag indicating whether we are using a web browser."""
         return self.browser
 
     def get_help_path(self) -> str | None:
-        """Return path to help file."""
+        """Return the path to the help file."""
         return str(self.help_path) if self.help_path else None
